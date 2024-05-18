@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Create Task</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(size=32, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.deadline.label }}
+            {{ form.deadline(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-custom">Submit</button>
+    </form>
+</div>
+{% endblock %}

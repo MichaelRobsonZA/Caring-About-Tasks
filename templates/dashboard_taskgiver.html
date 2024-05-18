@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Dashboard</h2>
+    <h1>Welcome, {{ current_user.username }}</h1>
+    <h3>Your Tasks</h3>
+    {% for task in tasks %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <p class="card-text">Description: {{ task.description }}</p>
+                <p class="card-text">Status: {{ task.status }}</p>
+                <a href="{{ url_for('task_details', task_id=task.id) }}" class="btn btn-custom">View Details</a>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('create_task') }}" class="btn btn-custom">Create New Task</a>
+</div>
+{% endblock %}

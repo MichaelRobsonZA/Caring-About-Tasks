@@ -1,0 +1,9 @@
+Flask
+Flask-SocketIO
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Login
+eventlet
+Werkzeug
+Flask-WTF
+wtforms

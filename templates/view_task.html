@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Task</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add custom CSS styles -->
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #FF5722;
+            border-bottom: 3px solid #333;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            color: #fff;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px 0;
+        }
+
+        .task-details {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            border-top: 3px solid #4CAF50;
+        }
+
+        footer p {
+            margin-bottom: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Task Details</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="task-details">
+                <p><strong>Title:</strong> {{ task.title }}</p>
+                <p><strong>Description:</strong> {{ task.description }}</p>
+                <!-- Add more details about the task as needed -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <!-- Add footer content -->
+        <div class="container">
+            <p>&copy; 2023 Task Manager</p>
+        </div>
+    </footer>
+</body>
+</html>

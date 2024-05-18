@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Task Details</h2>
+    <p><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Status:</strong> {{ task.status }}</p>
+    <h3>Accepted by:</h3>
+    <ul>
+        {% for user in taskacceptor_users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    {% if current_user.id == task.taskgiver_id and task.status == 'initiated' %}
+        <a href="{{ url_for('assign_task', task_id=task.id) }}" class="btn btn-custom">Assign Task</a>
+    {% elif current_user.id == task.taskacceptor_id and task.status == 'pending' %}
+        <a href="{{ url_for('accept_task', task_id=task.id) }}" class="btn btn-custom">Accept Task</a>
+    {% elif current_user.id == task.taskacceptor_id and task.status == 'accepted' %}
+        <a href="{{ url_for('complete_task', task_id=task.id) }}" class="btn btn-custom">Complete Task</a>
+    {% endif %}
+</div>
+{% endblock %}
