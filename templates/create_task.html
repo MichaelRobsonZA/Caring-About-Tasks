@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container">
     <h2>Create Task</h2>
@@ -7,15 +6,47 @@
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.title.label }}
-            {{ form.title(size=32, class="form-control") }}
+            {{ form.title(class="form-control") }}
+            {% if form.title.errors %}
+                <ul class="errors">
+                    {% for error in form.title.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.description.label }}
             {{ form.description(class="form-control") }}
+            {% if form.description.errors %}
+                <ul class="errors">
+                    {% for error in form.description.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.deadline.label }}
             {{ form.deadline(class="form-control") }}
+            {% if form.deadline.errors %}
+                <ul class="errors">
+                    {% for error in form.deadline.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.requires_acceptance.label }}
+            {{ form.requires_acceptance(class="form-check-input") }}
+            {% if form.requires_acceptance.errors %}
+                <ul class="errors">
+                    {% for error in form.requires_acceptance.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         <button type="submit" class="btn btn-custom">Submit</button>
     </form>

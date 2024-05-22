@@ -1,25 +1,74 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container">
     <h2>Dashboard</h2>
     <h1>Welcome, {{ current_user.username }}</h1>
-    <h3>Assigned Tasks</h3>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Task</th>
-                <th scope="col">ETA</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
+    
+    <h3>Your Assigned Tasks</h3>
+    {% if tasks %}
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
-                    <td>{{ task.title }}</td>
-                    <td>{{ task.deadline }}</td>
+                    <th scope="col">Task</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.deadline }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>
+                            <a href="{{ url_for('task_details', task_id=task.id) }}" class="btn btn-primary">View Details</a>
+                            {% if task.status == 'in progress' %}
+                                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-success">Complete</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tasks assigned to you.</p>
+    {% endif %}
+
+    <h3>Requested Tasks</h3>
+    {% if requested_tasks %}
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in requested_tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.deadline }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>
+                            <form action="{{ url_for('accept_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-primary">Accept</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tasks requested for you.</p>
+    {% endif %}
 </div>
 {% endblock %}

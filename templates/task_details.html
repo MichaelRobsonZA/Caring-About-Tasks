@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container">
     <h2>Task Details</h2>
@@ -8,16 +7,27 @@
     <p><strong>Status:</strong> {{ task.status }}</p>
     <h3>Accepted by:</h3>
     <ul>
-        {% for user in taskacceptor_users %}
-            <li>{{ user.username }}</li>
-        {% endfor %}
+        {% if task.taskacceptor_id %}
+            <li>{{ task.taskacceptor.username }}</li>
+        {% else %}
+            <li>Not yet accepted</li>
+        {% endif %}
     </ul>
-    {% if current_user.id == task.taskgiver_id and task.status == 'initiated' %}
-        <a href="{{ url_for('assign_task', task_id=task.id) }}" class="btn btn-custom">Assign Task</a>
-    {% elif current_user.id == task.taskacceptor_id and task.status == 'pending' %}
-        <a href="{{ url_for('accept_task', task_id=task.id) }}" class="btn btn-custom">Accept Task</a>
-    {% elif current_user.id == task.taskacceptor_id and task.status == 'accepted' %}
-        <a href="{{ url_for('complete_task', task_id=task.id) }}" class="btn btn-custom">Complete Task</a>
+    {% if current_user.id == task.taskgiver_id %}
+        {% if task.status == 'initiated' %}
+            <a href="{{ url_for('assign_task', task_id=task.id) }}" class="btn btn-custom">Assign Task</a>
+            <a href="{{ url_for('request_task', task_id=task.id) }}" class="btn btn-custom">Request Task</a>
+        {% endif %}
+    {% elif current_user.id == task.taskacceptor_id %}
+        {% if task.status == 'requested' or task.status == 'initiated' %}
+            <form action="{{ url_for('accept_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-primary">Accept Task</button>
+            </form>
+        {% elif task.status == 'in progress' %}
+            <form action="{{ url_for('complete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-success">Complete Task</button>
+            </form>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}
