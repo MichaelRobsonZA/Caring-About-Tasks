@@ -15,7 +15,6 @@
     </ul>
     {% if current_user.id == task.taskgiver_id %}
         {% if task.status == 'initiated' %}
-            <a href="{{ url_for('assign_task', task_id=task.id) }}" class="btn btn-custom">Assign Task</a>
             <a href="{{ url_for('request_task', task_id=task.id) }}" class="btn btn-custom">Request Task</a>
         {% endif %}
     {% elif current_user.id == task.taskacceptor_id %}

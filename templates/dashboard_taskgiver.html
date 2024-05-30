@@ -13,12 +13,20 @@
                 <p class="card-text">Status: {{ task.status }}</p>
                 <a href="{{ url_for('task_details', task_id=task.id) }}" class="btn btn-custom">View Details</a>
                 {% if task.status == 'initiated' %}
-                    <a href="{{ url_for('assign_task', task_id=task.id) }}" class="btn btn-custom">Assign Task</a>
-                    <a href="{{ url_for('request_task', task_id=task.id) }}" class="btn btn-custom">Request Task</a>
+                    <a href="{{ url_for('request_task', task_id=task.id) }}" class="btn btn-custom">Send a Task Request</a>
                 {% endif %}
+                <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete Task</button>
+                </form>
             </div>
         </div>
     {% endfor %}
     <a href="{{ url_for('create_task') }}" class="btn btn-custom">Create New Task</a>
 </div>
+<script>
+    setInterval(function(){
+        console.log("Refreshing page...");
+        location.reload();
+    }, 20000);
+</script>
 {% endblock %}

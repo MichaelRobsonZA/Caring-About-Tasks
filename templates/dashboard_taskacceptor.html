@@ -71,4 +71,10 @@
         <p>No tasks requested for you.</p>
     {% endif %}
 </div>
+<script>
+    setInterval(function(){
+        console.log("Refreshing page...");
+        location.reload();
+    }, 15000);
+</script>
 {% endblock %}
