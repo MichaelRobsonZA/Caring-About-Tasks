@@ -299,6 +299,24 @@ def complete_task(task_id):
     flash('Task completed successfully!', 'success')
     return redirect(url_for('dashboard'))
 
+@app.route('/delete_task/<int:task_id>', methods=['POST'])
+@login_required
+def delete_task(task_id):
+    task = Task.query.get(task_id)
+    if task is None:
+        flash('Task not found.', 'error')
+        return redirect(url_for('dashboard'))
+
+    if current_user.type != 'taskgiver' or task.taskgiver_id != current_user.id:
+        flash('Only the task giver who created the task can delete it', 'error')
+        return redirect(url_for('dashboard'))
+
+    db.session.delete(task)
+    db.session.commit()
+    flash('Task deleted successfully!', 'success')
+    return redirect(url_for('dashboard'))
+
+
 # Error handlers
 @app.errorhandler(404)
 def page_not_found(e):
@@ -307,6 +325,8 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+
 
 # Run the application
 if __name__ == '__main__':
